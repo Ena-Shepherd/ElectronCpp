@@ -4,7 +4,7 @@
 using json = nlohmann::json;
 
 // Point d'entrée pour recevoir les requêtes AJAX
-json myCppFunction(const std::string& requestData) {
+json eventListener(const std::string& requestData) {
     try {
         json requestJson = json::parse(requestData);
         return processRequest(requestJson);
