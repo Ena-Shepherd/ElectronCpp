@@ -1,5 +1,8 @@
-// preload.js
-const { contextBridge } = require('electron');
+const { contextBridge, ipcRenderer } = require('electron');
 
-// Exposer require au rendu
-window.require = require;
+contextBridge.exposeInMainWorld('ipcRenderer', ipcRenderer);
+
+// Récupérer les variables d'environnement depuis le processus principal et les exposer au rendu
+contextBridge.exposeInMainWorld('env', {
+    PORT: process.env.PORT
+});

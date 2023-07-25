@@ -1,7 +1,9 @@
-// renderer.js
+const { ipcRenderer } = window.ipcRenderer;
+const { env } = window;
+
 document.getElementById('runCppCode').addEventListener('click', () => {
     // Exemple : envoie une requête à votre serveur C++ en utilisant fetch
-    fetch('http://localhost:444/api/my-cpp-endpoint', {
+    fetch(`http://localhost:${env.PORT}/api/my-cpp-endpoint`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -22,8 +24,8 @@ document.getElementById('runCppCode').addEventListener('click', () => {
 
 //handling the other button
 document.getElementById('Ping').addEventListener('click', () => {
-  // Exemple : envoie une requête à votre serveur C++ en utilisant fetch
-  fetch('http://localhost:444/api/my-cpp-endpoint', {
+  // Exemple : envoie une requête à votre serveur C++
+  fetch(`http://localhost:${env.PORT}/api/my-cpp-endpoint`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

@@ -1,6 +1,11 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const { spawn } = require('child_process');
+require('dotenv').config({ path: '.env' });
+
+ipcMain.handle('get-env', (event) => {
+  return process.env; // Send the environment variables to the renderer process
+});
 
 let serverProcess;
 
