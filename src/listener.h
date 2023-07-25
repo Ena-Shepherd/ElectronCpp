@@ -15,4 +15,4 @@
 
 using json = nlohmann::json;
 
-json myCppFunction(const std::string& requestData);
+json eventListener(const std::string& requestData);
