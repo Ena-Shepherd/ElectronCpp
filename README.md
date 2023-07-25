@@ -20,5 +20,6 @@ First, make sure you have <a href="https://nodejs.org/en">Node.js</a> installed 
  - Compile with `server.cpp` and `listener.cpp`
  - name your executable `app.exe`
    <br/><br/>
-**Default port is 444**
 
+**Default port is 444** <br/>
+-> You can change the port in the `.env` file
