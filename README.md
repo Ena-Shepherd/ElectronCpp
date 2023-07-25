@@ -5,6 +5,9 @@ C++ app with a modern Web UI
 This repo contains everything you need to **setup any C++ app with a web interface.** <br/>
 We are using <a href="https://www.electronjs.org/fr/">ElectronJS</a> to pack the interface inside a window and **AJAX APIs** to communicate from the Interface to the app using Json requests
 
+## Preview
+![image](https://github.com/Ena-Shepherd/Cpp-WebUI-Template/assets/62568994/8618d4da-56cc-4e73-960b-05727fc0d625)
+
 ## How to use
 First, make sure you have <a href="https://nodejs.org/en">Node.js</a> installed <br/>
 `npm --version` <br/>
