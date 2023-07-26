@@ -3,7 +3,7 @@
 
 using json = nlohmann::json;
 
-// Fonction C++ pour traiter les données reçues via la requête AJAX
+// C++ function handling received data via the AJAX request
 json processRequest(const json& requestData) {
     
     json responseData;
@@ -16,15 +16,15 @@ json processRequest(const json& requestData) {
     return responseData;
 }
 
-// Point d'entrée pour recevoir les requêtes AJAX
+// Entry point to receive AJAX requests
 json eventListener(const std::string& requestData) {
     try {
         json requestJson = json::parse(requestData);
         return processRequest(requestJson);
     } catch (const std::exception& e) {
-        std::cerr << "Erreur lors du traitement des données JSON : " << e.what() << std::endl;
+        std::cerr << "Error on handling json data : " << e.what() << std::endl;
         json errorResponse;
-        errorResponse["error"] = "Erreur lors du traitement des données JSON";
+        errorResponse["error"] = "Error on handling json data";
         return errorResponse;
     }
 }

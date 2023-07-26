@@ -2,7 +2,7 @@ const { ipcRenderer } = window.ipcRenderer;
 const { env } = window;
 
 document.getElementById('runCppCode').addEventListener('click', () => {
-    // Exemple : envoie une requête à votre serveur C++ en utilisant fetch
+    // Example : sends a request to the C++ server using fetch
     fetch(`http://localhost:${env.PORT}/api/my-cpp-endpoint`, {
       method: 'POST',
       headers: {
@@ -12,19 +12,19 @@ document.getElementById('runCppCode').addEventListener('click', () => {
     })
     .then(response => response.json())
     .then(data => {
-      // Réception de la réponse du serveur C++
+      // Receiving C++ server answer
       const resultElement = document.getElementById('result');
-      resultElement.textContent = `Réponse du serveur : ${JSON.stringify(data)}`;
+      resultElement.textContent = `Server answer : ${JSON.stringify(data)}`;
     })
     .catch(error => {
-      // Gérer les erreurs ici
-      console.error('Erreur lors de la requête AJAX :', error);
+      // Handle errors here
+      console.error('Error on AJAX request :', error);
     });
 });
 
-//handling the other button
+// Handling the other button (almost a copy of above script)
 document.getElementById('Ping').addEventListener('click', () => {
-  // Exemple : envoie une requête à votre serveur C++
+
   fetch(`http://localhost:${env.PORT}/api/my-cpp-endpoint`, {
     method: 'POST',
     headers: {
@@ -34,12 +34,12 @@ document.getElementById('Ping').addEventListener('click', () => {
   })
   .then(response => response.json())
   .then(data => {
-    // Réception de la réponse du serveur C++
+
     const resultElement = document.getElementById('result');
-    resultElement.textContent = `Réponse du serveur : ${JSON.stringify(data)}`;
+    resultElement.textContent = `Server answer : ${JSON.stringify(data)}`;
 
     const bouton = document.getElementById('Ping');
-    if (data && data.message === 'Pong !' && bouton.classList.contains('btn-secondary')) { // Supposons que la réponse JSON contient un champ "success"
+    if (data && data.message === 'Pong !' && bouton.classList.contains('btn-secondary')) {
       bouton.classList.add('btn-primary');
       bouton.classList.remove('btn-secondary');
     } else {
@@ -49,7 +49,6 @@ document.getElementById('Ping').addEventListener('click', () => {
 
   })
   .catch(error => {
-    // Gérer les erreurs ici
-    console.error('Erreur lors de la requête AJAX :', error);
+    console.error('Error on AJAX request :', error);
   });
 });

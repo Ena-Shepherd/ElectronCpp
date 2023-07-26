@@ -1,5 +1,3 @@
-// server.cpp
-
 #include <httplib.h>
 #include <iostream>
 #include <nlohmann/json.hpp>
@@ -9,6 +7,7 @@
 #include <filesystem>
 #include <map>
 
+// Parsing .env file to get PORT
 std::map<std::string, std::string> loadEnvFile(const std::string &filename) {
   std::map<std::string, std::string> env;
   std::ifstream file(filename);
@@ -31,9 +30,9 @@ using namespace httplib;
 int main() {
   Server svr;
 
-  // Endpoint pour recevoir les requêtes AJAX de l'application Electron
+  // Endpoint to receive AJAX requests from Electron app
   svr.Post("/api/my-cpp-endpoint", [](const Request& req, Response& res) {
-    std::cout << "Requête reçue : " << req.body << std::endl;
+    std::cout << "Received request : " << req.body << std::endl;
     json requestData = json::parse(req.body);
     json responseData = eventListener(requestData.dump());
 
@@ -45,12 +44,11 @@ int main() {
   std::string currentDir = std::filesystem::current_path().string();
   std::string envFilePath = currentDir + "/.env";
   
-  // Port d'écoute du serveur
+  // Server listening port
   auto env = loadEnvFile(envFilePath);
   const int port = std::stoi(env["PORT"]);
 
-  // Lancez le serveur
-  std::cout << "Serveur C++ démarré sur le port " << port << std::endl;
+  std::cout << "C++ server started on port " << port << std::endl;
   svr.listen("localhost", port);
 
   return 0;

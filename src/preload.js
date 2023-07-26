@@ -2,7 +2,7 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('ipcRenderer', ipcRenderer);
 
-// Récupérer les variables d'environnement depuis le processus principal et les exposer au rendu
+// Get environment variables from main process and expose them on the render
 contextBridge.exposeInMainWorld('env', {
     PORT: process.env.PORT
 });

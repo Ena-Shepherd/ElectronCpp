@@ -15,7 +15,7 @@ function createWindow() {
     height: 600,
     icon: path.join(__dirname, '../media/logo.png'),
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js') // Chemin vers preload.js
+      preload: path.join(__dirname, 'preload.js')
     }
   });
 
@@ -23,21 +23,21 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
-  // Lancer le serveur C++ en tant que processus enfant
-  const serverPath = path.join(__dirname, '..', 'app.exe'); // Remplacez par le chemin de votre exécutable serveur C++
+  // Launch C++ server as child process
+  const serverPath = path.join(__dirname, '..', 'app.exe'); // Your executable location
   serverProcess = spawn(serverPath);
 
-  // Gérer les événements de sortie du processus serveur
+  // Handle server process output events
   serverProcess.stdout.on('data', (data) => {
-    console.log(`Sortie du serveur C++ : ${data}`);
+    console.log(`C++ server output : ${data}`);
   });
 
   serverProcess.stderr.on('data', (data) => {
-    console.error(`Erreur du serveur C++ : ${data}`);
+    console.error(`Error from C++ server : ${data}`);
   });
 
   serverProcess.on('close', (code) => {
-    console.log(`Le serveur C++ s'est arrêté avec le code de sortie ${code}`);
+    console.log(`C++ server stopped with exit code ${code}`);
   });
 
   createWindow();
@@ -47,14 +47,14 @@ app.whenReady().then(() => {
   });
 });
 
-// Gérer l'événement de fermeture de toutes les fenêtres
+// Handle all windows closing event
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    // Terminer le processus serveur avant de quitter l'application
+    // Make sure to kill the server or it will stay running in the background
     if (serverProcess) {
       console.log('Killed server');
-      serverProcess.kill('SIGINT'); // Envoyer le signal SIGINT pour terminer proprement le serveur
-      serverProcess = null; // Réinitialiser la variable du processus serveur
+      serverProcess.kill('SIGINT');
+      serverProcess = null;
     }
     app.quit();
   }
@@ -62,13 +62,13 @@ app.on('window-all-closed', () => {
 
 // Reste du code ipcMain pour exécuter le code C++
 ipcMain.on('run-cpp-code', (event, arg) => {
-  // Exécutez votre code C++ ici avec l'argument arg
+  // Execute C++ code here with argument arg
   exec('./app.exe' + JSON.stringify(arg), (error, stdout, stderr) => {
     if (error) {
-      // En cas d'erreur, renvoyez un message d'erreur au rendu
+      // Error, return an error message to the render
       event.reply('cpp-command-reply', { error: error.message });
     } else {
-      // En cas de succès, renvoyez la réponse au rendu
+      // Success, return response to the render
       event.reply('cpp-command-reply', { result: stdout });
     }
   });
