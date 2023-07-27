@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, session } = require('electron');
 const path = require('path');
 const { spawn } = require('child_process');
 require('dotenv').config({ path: '.env' });
@@ -23,6 +23,17 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+
+  // Setting up CSPs, to avoid XSS attacks (don't remove)
+  session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+    callback({
+      responseHeaders: {
+        ...details.responseHeaders, // Bootstrap content delivery network + AJAX requests endpoint exceptions
+        'Content-Security-Policy': [`default-src 'self'; style-src 'self' https://cdn.jsdelivr.net; script-src 'self' https://cdn.jsdelivr.net http://localhost:${process.env.PORT}/api/my-cpp-endpoint; connect-src http://localhost:${process.env.PORT}/api/my-cpp-endpoint;`]
+      }
+    });
+  });
+
   // Launch C++ server as child process
   const serverPath = path.join(__dirname, '..', 'app.exe'); // Your executable location
   serverProcess = spawn(serverPath);
