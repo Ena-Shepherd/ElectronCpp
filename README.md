@@ -1,5 +1,4 @@
-# Cpp-WebUI-Template
-C++ app with a modern Web UI
+# Make C++ apps with a modern Web UI
 
 ## About the template
 This repo contains everything you need to **setup any C++ app with a web interface.** <br/>
